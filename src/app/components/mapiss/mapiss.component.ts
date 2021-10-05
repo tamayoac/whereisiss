@@ -27,8 +27,6 @@ export class MapissComponent implements OnInit {
   private map!: L.Map;
   private marker!: L.Marker;
   private myIcon! :L.Icon;
-  // private centeroid: L.LatLngExpression = [this.latitude ,this.longitude];
-
  
   private initMap(): void {
   

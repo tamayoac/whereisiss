@@ -1,10 +1,9 @@
-<div class="w-full border-b">
+<div class="w-full bg-darkerGray">
   <app-navbar></app-navbar>
 </div>
-<div class="flex flex-wrap">
+<div class="flex flex-wrap bg-darkGray">
   <div class="w-4/6">
     <app-mapiss [longitude]="longitude" [latitude]="latitude"></app-mapiss>
-     
   </div>
   <div class="w-2/6">
     <app-sidebar [longitude]="longitude" [latitude]="latitude"  [velocity]="velocity" [altitude]="altitude" [time]="time"></app-sidebar>
