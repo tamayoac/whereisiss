@@ -11,7 +11,7 @@ export class ISSLocationService {
 
   constructor(private http: HttpClient) {}
 
-  getISSLocation(): Observable<ISSLocation> {
+  getLocation(): Observable<ISSLocation> {
     return this.http.get<ISSLocation>(this.apiUrl);
   }
 }

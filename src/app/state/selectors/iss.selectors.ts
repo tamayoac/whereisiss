@@ -5,7 +5,7 @@ export const selectISSState = createFeatureSelector<ISSState>('iss');
 
 export const selectISSLocation = createSelector(
   selectISSState,
-  (state: ISSState) => state.dataContent
+  (state: ISSState) => state.issLocation
 );
 
 export const selectISSError = createSelector(

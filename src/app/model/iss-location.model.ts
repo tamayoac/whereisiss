@@ -4,4 +4,5 @@ export interface ISSLocation {
     velocity: number;
     altitude: number;
     timestamp: number;
+    visibility: string;
   }

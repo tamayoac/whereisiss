@@ -1,0 +1,59 @@
+<div class=" text-white">
+    <div class="flex flex-wrap justify-center items-stretch p-6">
+      <div class="w-3/5 shadow-lg rounded overflow-hidden bg-gray-800">
+        <div id="map" class="mapbox-container h-full w-full"></div>
+      </div>
+      <div class="w-2/5">
+        <ng-container *ngIf="issLocation$ | async as issLocation" >
+            <div class="overflow-x-auto ml-5">
+              <table class="min-w-full divide-y divide-gray-700 bg-gray-800 text-white rounded-t-lg shadow-lg">
+                <thead>
+                  <tr>
+                    <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Parameter</th>
+                    <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Value</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700 text-xs">
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Latitude</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.latitude }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Longitude</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.longitude }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Velocity</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.velocity | number:'1.2-2' }} km/h</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Altitude</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.altitude | number:'1.2-2' }} km</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Timestamp</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">Visibility</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.visibility }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="flex-1 -full min-w-[300px] shadow-lg rounded overflow-hidden">
+                <div class="ml-5">
+                    <iframe
+                    width="560"
+                    height="320"
+                    src="https://www.youtube.com/embed/P9C25Un7xaM?autoplay=1&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+          </ng-container>
+      </div>
+    </div>
+  </div>
