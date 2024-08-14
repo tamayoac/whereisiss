@@ -10,9 +10,12 @@ import { environment } from '../../environments/environment';
 export class ISSLocationService {
   private apiUrl = environment.issapi
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log('ISS API URL:', this.apiUrl);  
+  }
 
   getLocation(): Observable<ISSLocation> {
+    console.log(this.apiUrl);
     return this.http.get<ISSLocation>(this.apiUrl);
   }
 }
