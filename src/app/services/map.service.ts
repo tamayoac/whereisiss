@@ -17,10 +17,12 @@ export class MapService {
       zoom: 2,
       accessToken: environment.mapbox.accessToken,
     });
-
+   
     this.map.addControl(new mapboxgl.NavigationControl());
     this.addMarker(latitude, longitude);
-
+    this.map.on('load', () => {
+      this.resizeMap();
+    });
     return this.map;
   }
 
@@ -55,5 +57,11 @@ export class MapService {
 
   isMapInitialized(): boolean {
     return !!this.map;
+  }
+
+  resizeMap(): void {
+    if (this.map) {
+      this.map.resize();
+    }
   }
 }

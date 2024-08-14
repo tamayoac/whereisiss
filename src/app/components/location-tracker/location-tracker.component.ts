@@ -9,6 +9,8 @@ import * as mapboxgl from 'mapbox-gl';
 import { selectISSLocation } from '../../state/selectors/iss.selectors';
 import { MapService } from '../../services/map.service';
 import { environment } from '../../../environments/environment.prod';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-location-tracker',
   templateUrl: './location-tracker.component.html',
@@ -17,11 +19,15 @@ export class LocationTrackerComponent implements OnInit, AfterViewInit, OnDestro
   issLocation$: Observable<ISSLocation>;
   map!: mapboxgl.Map;
   marker!: mapboxgl.Marker;
-  videoUrl: string;
+  videoUrl: SafeResourceUrl;
   private destroy$ = new Subject<void>();
   
 
-  constructor(private store: Store<fromISS.ISSState>, private mapService: MapService ) {
+  constructor(
+    private store: Store<fromISS.ISSState>, 
+    private mapService: MapService, 
+    private sanitizer: DomSanitizer
+  ) {
     this.issLocation$ = this.store.select(selectISSLocation).pipe(
       filter((location): location is ISSLocation => location !== null)
     );
@@ -30,8 +36,9 @@ export class LocationTrackerComponent implements OnInit, AfterViewInit, OnDestro
   ngOnInit(): void {
     this.store.dispatch(ISSActions.loadISSLocation());
   }
-  getSafeUrl(videoId: string | undefined): string {
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+  getSafeUrl(videoId: string | undefined): SafeResourceUrl {
+     const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   ngAfterViewInit(): void {
     this.issLocation$
