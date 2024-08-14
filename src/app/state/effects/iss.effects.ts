@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEffect } from '@ngrx/effects';
 import { of, timer } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import * as ISSActions from '../actions/iss.actions';
 import { ISSLocation } from '../../model/iss-location.model';
