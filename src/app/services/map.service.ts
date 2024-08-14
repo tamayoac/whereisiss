@@ -12,7 +12,7 @@ export class MapService {
   initializeMap(containerId: string, latitude: number, longitude: number): mapboxgl.Map {
     this.map = new mapboxgl.Map({
       container: containerId,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/yamatoac/clzucus2900hc01ra4g8g2b92',
       center: [longitude, latitude],
       zoom: 2,
       accessToken: environment.mapbox.accessToken,

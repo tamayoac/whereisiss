@@ -1,12 +1,12 @@
 <div class=" text-white">
     <div class="flex flex-wrap justify-center items-stretch p-6">
-      <div class="w-3/5 shadow-lg rounded overflow-hidden bg-gray-800">
+      <div class="w-3/5 shadow-xl shadow-indigo-700/90 rounded-l-xl overflow-hidden bg-gray-800">
         <div id="map" class="mapbox-container h-full w-full"></div>
       </div>
       <div class="w-2/5">
         <ng-container *ngIf="issLocation$ | async as issLocation" >
-            <div class="overflow-x-auto ml-5">
-              <table class="min-w-full divide-y divide-gray-700 bg-gray-800 text-white rounded-t-lg shadow-lg">
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-700 bg-gray-800 text-white rounded-tr-xl  shadow-lg">
                 <thead>
                   <tr>
                     <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Parameter</th>
@@ -41,18 +41,16 @@
                 </tbody>
               </table>
             </div>
-            <div class="flex-1 -full min-w-[300px] shadow-lg rounded overflow-hidden">
-                <div class="ml-5">
-                    <iframe
-                    width="560"
-                    height="320"
-                    [src]="videoUrl"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </div>
+            <div class="flex-1 w-full shadow-xl shadow-indigo-700/90 rounded overflow-hidden rounded-br-xl">
+              <iframe
+                width="100%"
+                height="320"
+                [src]="videoUrl"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
           </ng-container>
       </div>
     </div>
