@@ -24,6 +24,10 @@ export class LocationTrackerComponent implements OnInit, AfterViewInit, OnDestro
     this.issLocation$ = this.store.select(selectISSLocation).pipe(
       filter((location): location is ISSLocation => location !== null)
     );
+    console.log(this.issLocation$);
+    this.store.select(selectISSLocation).subscribe(state => {
+      console.log('Current state:', state);
+    });
   }
   ngOnInit(): void {
     console.log("ngOnInit is running");
