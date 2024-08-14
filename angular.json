@@ -25,7 +25,7 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
-              "path": "src/custom-webpack-config.ts"
+              "path": "./webpack-config.ts"
             },
             "outputPath": "dist/project-iis",
             "index": "src/index.html",

@@ -12,14 +12,11 @@ constructor(private issLocationService: ISSLocationService) {}
 loadISSLocation$ = createEffect(() =>
   timer(0, 5000).pipe(
     switchMap(() => {
-      console.log('Effect triggered: Fetching ISS location...');
       return this.issLocationService.getLocation().pipe(
         map((response: ISSLocation) => {
-          console.log('ISS location fetched successfully:', response);
           return ISSActions.loadISSLocationSuccess({ issLocation: response });
         }),
         catchError((error) => {
-          console.error('Error fetching ISS location:', error);
           return of(ISSActions.loadISSLocationFailure({ error }));
         })
       );

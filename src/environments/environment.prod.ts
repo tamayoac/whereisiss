@@ -3,5 +3,5 @@ export const environment = {
     mapbox: {
         accessToken: process.env['MAPBOX_ACCESS_TOKEN'] || ''
       },
-      issapi: process.env['ISS_API'] || ''
+      issapi: 'https://api.wheretheiss.at/v1/satellites/25544'
   };
