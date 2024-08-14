@@ -3,5 +3,6 @@ export const environment = {
     mapbox: {
       accessToken: process.env['MAPBOX_ACCESS_TOKEN'] || ''
     },
-    issapi: process.env['ISS_API'] || ''
+    issapi: process.env['ISS_API'] || '',
+    youtubeVideoId: process.env['YOUTUBE_ID'] || undefined,
   };
