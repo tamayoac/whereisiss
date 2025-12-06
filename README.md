@@ -1,27 +1,54 @@
-# ProjectIis
+# ISS Tracker (Angular + Mapbox)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+Minimal UI that shows the live position of the International Space Station with telemetry and an optional external HD camera stream.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Live ISS location rendered on Mapbox with a custom marker
+- Telemetry cards for latitude, longitude, velocity, altitude, timestamp, and visibility
+- Optional NASA external HD camera stream (YouTube embed)
+- Built with Angular 18, Tailwind CSS, and NgRx
 
-## Code scaffolding
+## Requirements
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js 18+
+- npm
 
-## Build
+## Setup
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create a `.env` file in the project root:
+   ```bash
+   MAPBOX_ACCESS_TOKEN=<your_mapbox_token>
+   ISS_API=https://api.wheretheiss.at/v1/satellites/25544
+   YOUTUBE_ID=<youtube_video_id_optional>
+   ```
+   `ISS_API` must return latitude, longitude, velocity, altitude, timestamp, and visibility fields.
+3. Start the dev server:
+   ```bash
+   npm start
+   ```
+   Visit `http://localhost:4200/`.
 
-## Running unit tests
+## Scripts
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `npm start` - run dev server with hot reload
+- `npm run build` - build for development
+- `npm run build:prod` - production build
+- `npm run serve:prod` - serve the compiled app from `dist/project-iis` (after build)
+- `npm test` - run unit tests
 
-## Running end-to-end tests
+## Project structure
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `src/app/components/location-tracker` - map, telemetry UI, and stream embed
+- `src/app/services/iss-location.service.ts` - ISS API client using `ISS_API`
+- `src/app/services/map.service.ts` - Mapbox helper and marker config
+- `src/environments` - environment values loaded from `.env`
 
-## Further help
+## Notes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- The Mapbox style is set in `map.service.ts` and can be swapped for your own.
+- The external camera feed may be offline; the embed remains in place gracefully.

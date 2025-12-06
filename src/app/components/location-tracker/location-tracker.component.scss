@@ -1,6 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.mapbox-container {
+  width: 100%;
+  min-height: 360px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #0f172a;
+}
+
 .custom-marker {
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 50%; // Optional: Make the marker circular
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Optional: Add shadow for better visibility
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }

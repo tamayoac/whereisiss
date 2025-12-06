@@ -1,57 +1,104 @@
-<div class=" text-white">
-    <div class="flex flex-wrap justify-center items-stretch p-6">
-      <div class="w-3/5 shadow-xl shadow-indigo-700/90 rounded-l-xl overflow-hidden bg-gray-800">
-        <div id="map" class="mapbox-container h-full w-full"></div>
-      </div>
-      <div class="w-2/5">
-        <ng-container *ngIf="issLocation$ | async as issLocation" >
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-700 bg-gray-800 text-white rounded-tr-xl  shadow-lg">
-                <thead>
-                  <tr>
-                    <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Parameter</th>
-                    <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Value</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700 text-xs">
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Latitude</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.latitude }}</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Longitude</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.longitude }}</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Velocity</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.velocity | number:'1.2-2' }} km/h</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Altitude</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.altitude | number:'1.2-2' }} km</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Timestamp</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">Visibility</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{ issLocation.visibility }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="flex-1 w-full shadow-xl shadow-indigo-700/90 rounded overflow-hidden rounded-br-xl">
-              <iframe
-                width="100%"
-                height="320"
-                [src]="videoUrl"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </ng-container>
-      </div>
+<section class="space-y-6 text-slate-100">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Live telemetry</p>
+      <h2 class="text-2xl font-semibold leading-tight">ISS position and earth view</h2>
+      <p class="text-sm text-slate-500">Minimal UI focused on the essentials.</p>
+    </div>
+    <div
+      class="flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300"
+    >
+      <span class="h-2 w-2 rounded-full bg-emerald-400 opacity-90 animate-pulse"></span>
+      Tracking in real time
     </div>
   </div>
+
+  <div class="grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+      <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+        <div id="map" class="mapbox-container" style="aspect-ratio: 4 / 3;"></div>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-sm">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-slate-100">Current metrics</h3>
+        <span class="text-xs text-slate-500">UTC</span>
+      </div>
+
+      <ng-container *ngIf="issLocation$ | async as issLocation; else loading">
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Latitude</p>
+            <p class="text-lg font-semibold text-slate-50">{{ issLocation.latitude | number:'1.2-2' }} deg</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Longitude</p>
+            <p class="text-lg font-semibold text-slate-50">{{ issLocation.longitude | number:'1.2-2' }} deg</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Velocity</p>
+            <p class="text-lg font-semibold text-slate-50">
+              {{ issLocation.velocity | number:'1.2-2' }} km/h
+            </p>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Altitude</p>
+            <p class="text-lg font-semibold text-slate-50">
+              {{ issLocation.altitude | number:'1.2-2' }} km
+            </p>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Visibility</p>
+            <p class="text-lg font-semibold text-slate-50 capitalize">{{ issLocation.visibility }}</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
+            <p class="text-xs text-slate-500">Timestamp</p>
+            <p class="text-sm font-semibold text-slate-50">
+              {{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}
+            </p>
+          </div>
+        </div>
+        <p class="mt-4 text-xs text-slate-500">
+          Last updated {{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}
+        </p>
+      </ng-container>
+
+      <ng-template #loading>
+        <div class="mt-6 space-y-2 text-sm text-slate-500">
+          <p>Fetching live telemetry...</p>
+          <p class="text-xs text-slate-600">Keep this page open while we connect.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+    <div class="flex items-center justify-between px-5 py-4">
+      <div>
+        <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Earth view</p>
+        <p class="text-sm font-semibold text-slate-100">External HD camera</p>
+      </div>
+      <span
+        class="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300"
+      >
+        Live stream
+      </span>
+    </div>
+    <div class="bg-slate-950">
+      <iframe
+        width="100%"
+        class="block w-full"
+        style="aspect-ratio: 16 / 9;"
+        [src]="videoUrl"
+        title="ISS External HD Camera"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <p class="px-5 py-4 text-xs text-slate-500">
+        Stream courtesy of NASA. The feed may be temporarily unavailable.
+      </p>
+    </div>
+  </div>
+</section>
