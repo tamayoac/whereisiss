@@ -1,56 +1,54 @@
-<section class="space-y-6 text-slate-100">
-  <div class="flex flex-wrap items-start justify-between gap-3">
+<section class="space-y-4 text-slate-100">
+  <div class="flex flex-wrap items-center justify-between gap-3">
     <div>
       <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Live telemetry</p>
-      <h2 class="text-2xl font-semibold leading-tight">ISS position and earth view</h2>
-      <p class="text-sm text-slate-500">Minimal UI focused on the essentials.</p>
+      <h2 class="text-xl font-semibold leading-tight">ISS position</h2>
+      <p class="text-xs text-slate-500">Compact, single-page view.</p>
     </div>
     <div
       class="flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300"
     >
       <span class="h-2 w-2 rounded-full bg-emerald-400 opacity-90 animate-pulse"></span>
-      Tracking in real time
+      Tracking live
     </div>
   </div>
 
-  <div class="grid gap-6 lg:grid-cols-3">
-    <div class="lg:col-span-2">
-      <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
-        <div id="map" class="mapbox-container" style="aspect-ratio: 4 / 3;"></div>
-      </div>
+  <div class="grid gap-4 lg:grid-cols-[2fr_1fr]">
+    <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+      <div id="map" class="mapbox-container" style="aspect-ratio: 4 / 3;"></div>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-sm">
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 shadow-sm flex flex-col gap-4">
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-semibold text-slate-100">Current metrics</h3>
         <span class="text-xs text-slate-500">UTC</span>
       </div>
 
       <ng-container *ngIf="issLocation$ | async as issLocation; else loading">
-        <div class="mt-4 grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-3">
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Latitude</p>
-            <p class="text-lg font-semibold text-slate-50">{{ issLocation.latitude | number:'1.2-2' }} deg</p>
+            <p class="text-base font-semibold text-slate-50">{{ issLocation.latitude | number:'1.2-2' }} deg</p>
           </div>
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Longitude</p>
-            <p class="text-lg font-semibold text-slate-50">{{ issLocation.longitude | number:'1.2-2' }} deg</p>
+            <p class="text-base font-semibold text-slate-50">{{ issLocation.longitude | number:'1.2-2' }} deg</p>
           </div>
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Velocity</p>
-            <p class="text-lg font-semibold text-slate-50">
+            <p class="text-base font-semibold text-slate-50">
               {{ issLocation.velocity | number:'1.2-2' }} km/h
             </p>
           </div>
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Altitude</p>
-            <p class="text-lg font-semibold text-slate-50">
+            <p class="text-base font-semibold text-slate-50">
               {{ issLocation.altitude | number:'1.2-2' }} km
             </p>
           </div>
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Visibility</p>
-            <p class="text-lg font-semibold text-slate-50 capitalize">{{ issLocation.visibility }}</p>
+            <p class="text-base font-semibold text-slate-50 capitalize">{{ issLocation.visibility }}</p>
           </div>
           <div class="rounded-xl border border-slate-800/80 bg-slate-900/70 p-3">
             <p class="text-xs text-slate-500">Timestamp</p>
@@ -59,46 +57,33 @@
             </p>
           </div>
         </div>
-        <p class="mt-4 text-xs text-slate-500">
-          Last updated {{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}
+        <p class="text-xs text-slate-500">
+          Updated {{ convertTimestampToDate(issLocation.timestamp) | date:'medium':'UTC' }}
         </p>
+
+        <div class="rounded-xl border border-slate-800/80 bg-slate-950">
+          <iframe
+            width="100%"
+            class="block w-full rounded-xl"
+            style="aspect-ratio: 16 / 9;"
+            [src]="videoUrl"
+            title="ISS External HD Camera"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <p class="px-3 py-2 text-[11px] text-slate-500">
+            NASA external HD camera stream. May be temporarily unavailable.
+          </p>
+        </div>
       </ng-container>
 
       <ng-template #loading>
-        <div class="mt-6 space-y-2 text-sm text-slate-500">
+        <div class="space-y-2 text-sm text-slate-500">
           <p>Fetching live telemetry...</p>
           <p class="text-xs text-slate-600">Keep this page open while we connect.</p>
         </div>
       </ng-template>
-    </div>
-  </div>
-
-  <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
-    <div class="flex items-center justify-between px-5 py-4">
-      <div>
-        <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Earth view</p>
-        <p class="text-sm font-semibold text-slate-100">External HD camera</p>
-      </div>
-      <span
-        class="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300"
-      >
-        Live stream
-      </span>
-    </div>
-    <div class="bg-slate-950">
-      <iframe
-        width="100%"
-        class="block w-full"
-        style="aspect-ratio: 16 / 9;"
-        [src]="videoUrl"
-        title="ISS External HD Camera"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <p class="px-5 py-4 text-xs text-slate-500">
-        Stream courtesy of NASA. The feed may be temporarily unavailable.
-      </p>
     </div>
   </div>
 </section>
