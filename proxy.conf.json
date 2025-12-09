@@ -1,0 +1,11 @@
+{
+  "/n2yo-api": {
+    "target": "https://api.n2yo.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/n2yo-api": ""
+    }
+  }
+}
+

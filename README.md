@@ -1,16 +1,28 @@
-# ISS Tracker (Angular + Mapbox)
+# Satellite Tracker (Angular + Mapbox + N2YO)
 
-Minimal UI that shows the live position of the International Space Station with telemetry and an optional external HD camera stream.
+Real-time satellite tracking app that displays multiple satellites on an interactive Mapbox map using the N2YO API.
 
 ## Features
+- Track multiple satellites simultaneously (ISS, Hubble, NOAA, Starlink, etc.)
+- Live position updates every 5 seconds
+- Interactive Mapbox map with custom markers per satellite type
+- Telemetry display: latitude, longitude, altitude, sunlit/eclipsed status
+- NASA ISS external HD camera stream (when ISS is selected)
+- Built with Angular 18, NgRx, Tailwind CSS
 
-- Live ISS location rendered on Mapbox with a custom marker
-- Telemetry cards for latitude, longitude, velocity, altitude, timestamp, and visibility
-- Optional NASA external HD camera stream (YouTube embed)
-- Built with Angular 18, Tailwind CSS, and NgRx
+## Tracked Satellites
+| Satellite | NORAD ID | Category |
+|-----------|----------|----------|
+| ISS (ZARYA) | 25544 | Space Station |
+| CSS (Tianhe) | 48274 | Space Station |
+| Hubble Space Telescope | 20580 | Science |
+| NOAA 19 | 33591 | Weather |
+| NOAA 18 | 28654 | Weather |
+| Starlink-24 | 43013 | Starlink |
+| Terra | 25994 | Science |
+| Aqua | 27424 | Science |
 
 ## Requirements
-
 - Node.js 18+
 - npm
 
@@ -20,13 +32,16 @@ Minimal UI that shows the live position of the International Space Station with 
    ```bash
    npm install
    ```
+
 2. Create a `.env` file in the project root:
    ```bash
    MAPBOX_ACCESS_TOKEN=<your_mapbox_token>
-   ISS_API=https://api.wheretheiss.at/v1/satellites/25544
+   N2YO_API_KEY=<your_n2yo_api_key>
    YOUTUBE_ID=<youtube_video_id_optional>
    ```
-   `ISS_API` must return latitude, longitude, velocity, altitude, timestamp, and visibility fields.
+
+   Get your N2YO API key at [n2yo.com/api](https://www.n2yo.com/api/).
+
 3. Start the dev server:
    ```bash
    npm start
@@ -34,21 +49,39 @@ Minimal UI that shows the live position of the International Space Station with 
    Visit `http://localhost:4200/`.
 
 ## Scripts
+- `npm start` – run dev server with hot reload
+- `npm run build` – build for development
+- `npm run build:prod` – production build
+- `npm run serve:prod` – serve compiled app from `dist/project-iis`
+- `npm test` – run unit tests
 
-- `npm start` - run dev server with hot reload
-- `npm run build` - build for development
-- `npm run build:prod` - production build
-- `npm run serve:prod` - serve the compiled app from `dist/project-iis` (after build)
-- `npm test` - run unit tests
+## Project Structure
+```
+src/app/
+├── components/
+│   └── location-tracker/    # Main tracker UI
+├── model/
+│   ├── iss-location.model.ts
+│   └── satellite.model.ts   # N2YO response types
+├── services/
+│   ├── satellite.service.ts # N2YO API client
+│   └── map.service.ts       # Mapbox + multi-marker support
+└── state/
+    ├── actions/
+    ├── effects/
+    ├── reducer/
+    └── selectors/
+```
 
-## Project structure
+## API Notes
+- **N2YO API**: Free tier allows 1,000 requests/hour. Positions endpoint is polled every 5 seconds.
+- **Mapbox**: Custom dark style. Change in `map.service.ts` if needed.
 
-- `src/app/components/location-tracker` - map, telemetry UI, and stream embed
-- `src/app/services/iss-location.service.ts` - ISS API client using `ISS_API`
-- `src/app/services/map.service.ts` - Mapbox helper and marker config
-- `src/environments` - environment values loaded from `.env`
+## Adding More Satellites
+Edit `src/app/model/satellite.model.ts` and add entries to `TRACKED_SATELLITES`:
+```typescript
+{ id: 12345, name: 'My Satellite', category: SatelliteCategory.OTHER, icon: 'satellite' }
+```
 
-## Notes
-
-- The Mapbox style is set in `map.service.ts` and can be swapped for your own.
-- The external camera feed may be offline; the embed remains in place gracefully.
+## License
+MIT
