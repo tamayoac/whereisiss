@@ -13,9 +13,9 @@
     </div>
   </div>
 
-  <div class="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+  <div class="grid gap-6 lg:grid-cols-[1.8fr_1fr]">
     <div class="overflow-hidden rounded-3xl bg-black/70 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
-      <div id="map" class="mapbox-container h-[420px] w-full"></div>
+      <div id="map" class="mapbox-container h-[520px] w-full sm:h-[460px]"></div>
     </div>
 
     <div class="rounded-3xl bg-black/70 p-4 lg:p-5 flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
@@ -48,25 +48,25 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="rounded-2xl bg-neutral-900/80 p-3">
+          <div class="rounded-2xl bg-transparent p-2">
             <p class="text-xs text-zinc-500">Latitude</p>
             <p class="text-base font-semibold text-slate-50">{{ sat.latitude | number:'1.2-2' }}°</p>
           </div>
-          <div class="rounded-2xl bg-neutral-900/80 p-3">
+          <div class="rounded-2xl bg-transparent p-2">
             <p class="text-xs text-zinc-500">Longitude</p>
             <p class="text-base font-semibold text-slate-50">{{ sat.longitude | number:'1.2-2' }}°</p>
           </div>
-          <div class="rounded-2xl bg-neutral-900/80 p-3">
+          <div class="rounded-2xl bg-transparent p-2">
             <p class="text-xs text-zinc-500">Altitude</p>
             <p class="text-base font-semibold text-slate-50">{{ sat.altitude | number:'1.2-2' }} km</p>
           </div>
-          <div class="rounded-2xl bg-neutral-900/80 p-3">
+          <div class="rounded-2xl bg-transparent p-2">
             <p class="text-xs text-zinc-500">Status</p>
             <p class="text-base font-semibold" [class.text-amber-400]="sat.eclipsed" [class.text-emerald-400]="!sat.eclipsed">
               {{ sat.eclipsed ? 'In shadow' : 'Sunlit' }}
             </p>
           </div>
-          <div class="rounded-2xl bg-neutral-900/80 p-3 col-span-2">
+          <div class="rounded-2xl bg-transparent p-2 col-span-2">
             <p class="text-xs text-zinc-500">Last update</p>
             <p class="text-sm font-semibold text-slate-50">
               {{ convertTimestampToDate(sat.timestamp) | date:'medium':'UTC' }}
